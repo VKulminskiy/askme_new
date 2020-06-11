@@ -22,6 +22,8 @@ class User < ApplicationRecord
   # Проверка формата юзернейма пользователя (только латинские буквы, цифры, и знак _)
   validates :username, length: { maximum: 40 }, format: { with: CHECK_USERNAME }
 
+  before_validation :username_downcase
+
   # Служебный метод, преобразующий бинарную строку в 16-ричный формат,
   # для удобства хранения.
   def self.hash_to_string(password_hash)
@@ -72,5 +74,11 @@ class User < ApplicationRecord
 
       # Оба поля окажутся записанными в базу при сохранении (save).
     end
+  end
+
+  private
+
+  def username_downcase
+    username.downcase!
   end
 end
