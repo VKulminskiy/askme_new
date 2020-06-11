@@ -3,23 +3,24 @@ require 'openssl'
 class User < ApplicationRecord
   # Параметры работы для модуля шифрования паролей
   ITERATIONS = 20_000
+  CHECK_EMAIL = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  CHECK_USERNAME = /\A\w+\z/
   DIGEST = OpenSSL::Digest::SHA256.new
 
   attr_accessor :password
 
   has_many :questions
 
-  validates :email, :username, presence: true
-  validates :email, :username, uniqueness: true
-  validates :password, presence: true, on: :create
+  validates :email, :username, presence: true, uniqueness: true
+  validates :password, presence: true, confirmation: true, on: :create
+  # ИЛИ
+  #
+  #validates_confirmation_of :password
   # Проверка формата электронной почты пользователя
-  validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  validates :email, format: { with: CHECK_EMAIL }
   # Проверка максимальной длины юзернейма пользователя (не больше 40 символов)
   # Проверка формата юзернейма пользователя (только латинские буквы, цифры, и знак _)
-  validates :username, length: { maximum: 40 }, format: { with: /[A-Za-z0-9_]/ }
-  validates :password, confirmation: true
-  # ИЛИ
-  #validates_confirmation_of :password
+  validates :username, length: { maximum: 40 }, format: { with: CHECK_USERNAME }
 
   # Служебный метод, преобразующий бинарную строку в 16-ричный формат,
   # для удобства хранения.
