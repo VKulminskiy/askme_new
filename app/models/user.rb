@@ -23,6 +23,7 @@ class User < ApplicationRecord
   validates :username, length: { maximum: 40 }, format: { with: CHECK_USERNAME }
 
   before_validation :username_downcase
+  before_validation :email_downcase
 
   # Служебный метод, преобразующий бинарную строку в 16-ричный формат,
   # для удобства хранения.
@@ -79,6 +80,10 @@ class User < ApplicationRecord
   private
 
   def username_downcase
-    username.downcase!
+    username&.downcase!
+  end
+
+  def email_downcase
+    email&.downcase!
   end
 end
