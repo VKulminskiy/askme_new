@@ -10,7 +10,7 @@ module ApplicationHelper
   def words_form(number, enot, enota, enotov)
     ostatok = number % 10
 
-    return enotov if number.between?(11, 14) || number % 100 == 11
+    return enotov if number.between?(11, 14) || (number % 100).between?(11, 14)
 
     return enot if ostatok == 1
 
