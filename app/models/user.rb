@@ -25,6 +25,9 @@ class User < ApplicationRecord
   before_validation :username_downcase
   before_validation :email_downcase
 
+  before_save :encrypt_password
+
+
   # Служебный метод, преобразующий бинарную строку в 16-ричный формат,
   # для удобства хранения.
   def self.hash_to_string(password_hash)
@@ -60,20 +63,13 @@ class User < ApplicationRecord
   # Шифруем пароль, если он задан
   def encrypt_password
     if password.present?
-      # Создаем т. н. «соль» — рандомная строка усложняющая задачу хакерам по
-      # взлому пароля, даже если у них окажется наша база данных.
+      # создаём соль
       self.password_salt = User.hash_to_string(OpenSSL::Random.random_bytes(16))
 
-      # Создаем хэш пароля — длинная уникальная строка, из которой невозможно
-      # восстановить исходный пароль. Однако, если правильный пароль у нас есть,
-      # мы легко можем получить такую же строку и сравнить её с той, что в базе.
+      # создаём хэш пароля
       self.password_hash = User.hash_to_string(
-        OpenSSL::PKCS5.pbkdf2_hmac(
-          password, password_salt, ITERATIONS, DIGEST.length, DIGEST
-        )
+          OpenSSL::PKCS5.pbkdf2_hmac(self.password, self.password_salt, ITERATIONS, DIGEST.length, DIGEST)
       )
-
-      # Оба поля окажутся записанными в базу при сохранении (save).
     end
   end
 
