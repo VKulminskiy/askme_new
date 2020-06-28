@@ -18,6 +18,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      # в объект session записываем идентификатор пользователя
+      session[:user_id] = @user.id
+
       redirect_to root_url, notice: 'Пользователь успешно зарегестрирован!'
     else
       render 'new'
