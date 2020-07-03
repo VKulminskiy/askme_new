@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
     if @user.save
       # в объект session записываем идентификатор пользователя
+      # логинимся после авторизации
       session[:user_id] = @user.id
 
       redirect_to root_url, notice: 'Пользователь успешно зарегестрирован!'

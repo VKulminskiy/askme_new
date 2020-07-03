@@ -5,6 +5,7 @@ class User < ApplicationRecord
   ITERATIONS = 20_000
   CHECK_EMAIL = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   CHECK_USERNAME = /\A\w+\z/
+  COLOR = /\#([a-fA-F]|[0-9]){3, 6}/
   DIGEST = OpenSSL::Digest::SHA256.new
 
   attr_accessor :password
@@ -21,6 +22,8 @@ class User < ApplicationRecord
   # Проверка максимальной длины юзернейма пользователя (не больше 40 символов)
   # Проверка формата юзернейма пользователя (только латинские буквы, цифры, и знак _)
   validates :username, length: { maximum: 40 }, format: { with: CHECK_USERNAME }
+  # проверка формата воода цвета (hex-запись)
+  validates :color, format: { with: COLOR }
 
   before_validation :username_downcase
   before_validation :email_downcase
