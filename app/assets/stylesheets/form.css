@@ -34,3 +34,8 @@
   list-style: none;
   margin-bottom: 10px;
 }
+
+.form-color {
+  height: 45px;
+  width: 150px;
+}
