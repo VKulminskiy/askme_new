@@ -5,7 +5,7 @@ class User < ApplicationRecord
   ITERATIONS = 20_000
   CHECK_EMAIL = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   CHECK_USERNAME = /\A\w+\z/
-  COLOR = /\A#?([a-f0-9]{6}|[a-f0-9]{3})\z/
+  COLOR = /\A#([a-f0-9]{6}|[a-f0-9]{3})\z/
   DIGEST = OpenSSL::Digest::SHA256.new
 
   attr_accessor :password
