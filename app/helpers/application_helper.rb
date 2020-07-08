@@ -7,6 +7,14 @@ module ApplicationHelper
     end
   end
 
+  def color_default(user)
+    if user.color == nil
+      '#005a55'
+    else
+      user.color
+    end
+  end
+
   def words_form(number, enot, enota, enotov)
     ostatok = number % 10
 
