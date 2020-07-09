@@ -7,7 +7,7 @@ module ApplicationHelper
     end
   end
 
-  def color_default(user)
+  def user_color(user)
     if user.color == nil
       '#005a55'
     else

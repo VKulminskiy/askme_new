@@ -32,7 +32,7 @@
 
       <div class="form-field">
         <%= f.label 'Цвет профиля', class: 'form-label' %>
-        <%= f.color_field :color, value: color_default(@user), class: 'form-text-field form-color' %>
+        <%= f.color_field :color, value: user_color(@user), class: 'form-text-field form-color' %>
       </div>
 
       <div class="buffer-top-large buffer-bottom">
@@ -51,6 +51,10 @@
 
       <div class="form-action buffer-top">
         <%= f.submit 'Сохранить', class: 'button button-dark button-small' %>
+      </div>
+
+      <div class="buffer-top-large">
+        <%= link_to "Удалить профиль" %>
       </div>
     <% end %>
 
