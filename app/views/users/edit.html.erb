@@ -54,7 +54,7 @@
       </div>
 
       <div class="buffer-top-large">
-        <%= link_to "Удалить профиль" %>
+        <%= link_to "Удалить профиль", user_path(@user), data: { method: :delete } %>
       </div>
     <% end %>
 
