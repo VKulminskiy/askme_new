@@ -7,13 +7,13 @@ class UsersController < ApplicationController
   end
 
   def new
-    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    redirect_to root_path, alert: 'Вы уже залогинены' if current_user.present?
 
     @user = User.new
   end
 
   def create
-    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    redirect_to root_path, alert: 'Вы уже залогинены' if current_user.present?
 
     @user = User.new(user_params)
 
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       # логинимся после авторизации
       session[:user_id] = @user.id
 
-      redirect_to root_url, notice: 'Пользователь успешно зарегестрирован!'
+      redirect_to root_path, notice: 'Пользователь успешно зарегестрирован!'
     else
       render 'new'
     end
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
 
-    redirect_to root_url, notice: 'Пользователь успешно удален!'
+    redirect_to root_path, notice: 'Пользователь успешно удален!'
   end
 
   def edit
